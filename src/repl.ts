@@ -1,4 +1,5 @@
 import { createInterface } from "node:readline";
+import { getCommands } from "./command_registry.js";
 
 export function startREPL() {
   const rl = createInterface({
@@ -16,7 +17,13 @@ export function startREPL() {
       return;
     }
 
-    console.log(`Your command was: ${cmds[0]}`);
+    const cmdRegistry = getCommands();
+    const cmd = cmdRegistry[cmds[0]];
+    if (cmd) {
+      cmd.callback(cmdRegistry);
+    }
+    console.log();
+
     rl.prompt();
   });
 }
