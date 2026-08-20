@@ -12,23 +12,22 @@ export type State = {
   readline: Interface;
   commands: Record<string, CLICommand>;
   API: PokeAPI;
-  nextLocationURL: string | null;
-  prevLocationURL: string | null;
+  nextLocationURL: string;
+  prevLocationURL: string;
 };
 
-export function initState(): State {
+export function initState(cacheInterval: number): State {
   const rl = createInterface({
     input: process.stdin,
     output: process.stdout,
     prompt: "Pokedex > ",
   });
-  const api = new PokeAPI();
 
   return {
     readline: rl,
     commands: getCommands(),
-    API: api,
-    nextLocationURL: null,
-    prevLocationURL: null,
+    API: new PokeAPI(cacheInterval),
+    nextLocationURL: "",
+    prevLocationURL: "",
   };
 }
