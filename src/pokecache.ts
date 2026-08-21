@@ -21,10 +21,10 @@ export class Cache {
     this.#cache.set(key, entry);
   }
 
-  get<T>(key: string): T | undefined {
+  get<T>(key: string) {
     const entry = this.#cache.get(key);
     if (entry !== undefined) {
-      return entry as T;
+      return entry.val as T;
     }
     return undefined;
   }
